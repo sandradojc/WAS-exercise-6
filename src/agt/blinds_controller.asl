@@ -22,7 +22,42 @@ blinds("lowered").
 */
 @start_plan
 +!start : td("https://was-course.interactions.ics.unisg.ch/wake-up-ontology#Blinds", Url) <-
-    .print("Hello world").
+    .print("Hello world");
+    makeArtifact("Blinds", "org.hyperagents.jacamo.artifacts.wot.ThingArtifact", [Url], ArtId);
+    .print("Blinds created");
+    !read_blinds_state.
+
+@read_blinds_state_plan_when_lowered
++!read_blinds_state : blinds("lowered") <-
+    invokeAction("https://was-course.interactions.ics.unisg.ch/wake-up-ontology#SetState", ["raised"]);
+    -+blinds("raised");
+    .print("Blinds are raised");
+    .send(personal_assistant, tell, blinds("raised")).
+
+@read_blinds_state_plan_when_raised
++!read_blinds_state : blinds("raised") <-
+    invokeAction("https://was-course.interactions.ics.unisg.ch/wake-up-ontology#SetState", ["lowered"]);
+    -+blinds("lowered");
+    .print("Blinds are lowered");
+    .send(personal_assistant, tell, blinds("lowered")).
+
+@respond_to_proposal_accept
++cfp(increase_illuminance) : blinds("lowered") <-
+    .print("Blinds are lowered, sending proposal to raise them");
+    .send(personal_assistant, tell, proposal(raise_blinds)).
+
+@respond_to_proposal_refuse
++cfp(increase_illuminance) : blinds("raised") <-
+    .print("Blinds are already raised, sending refusal");
+    .send(personal_assistant, tell, refusal(raise_blinds)).
+
+@execution_blinds
++execute(raise_blinds) : true <-
+    !read_blinds_state.
+
+@blinds_state_plan
++blinds(BlindsState) : true <-
+    .print("The blinds state is ", BlindsState).
 
 /* Import behavior of agents that work in CArtAgO environments */
 { include("$jacamoJar/templates/common-cartago.asl") }
