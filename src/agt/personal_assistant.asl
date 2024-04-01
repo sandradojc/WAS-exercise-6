@@ -24,7 +24,7 @@ artifical_light(1).
 
 @create_dweet_plan
 +!createDweet : blinds("raised") & lights("on") <-
-    makeArtifact("dweet", room.DweetArtifact, [], DweeterId);
+    makeArtifact("dweet","room.DweetArtifact", [], DweeterId);
     .print("Dweet created").
 
 @react_to_event_plan_when_awake

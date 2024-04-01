@@ -28,8 +28,8 @@ td("https://was-course.interactions.ics.unisg.ch/wake-up-ontology#CalendarServic
 
 @read_upcoming_event_plan
 +!read_upcoming_event : true <-
-    readProperty("https://was-course.interactions.ics.unisg.ch/wake-up-ontology#ReadUpcomingEvent",  UpcomingEventList);
-    .nth(0,UpcomingEventList,UpcomingEvent);
+    readProperty("https://was-course.interactions.ics.unisg.ch/wake-up-ontology#ReadUpcomingEvent",  UpcomingEventLst);
+    .nth(0,UpcomingEventLst,UpcomingEvent);
     -+upcoming_event(UpcomingEvent);
     .send(personal_assistant, tell, upcoming_event(UpcomingEvent));
     .print("Told personal assistant about event");
