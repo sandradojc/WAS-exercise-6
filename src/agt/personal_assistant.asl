@@ -6,6 +6,8 @@ best_option(Rank) :- Rank = 0.
 // initial beliefs
 natural_light(0).
 artifical_light(1).
+blinds("lowered").
+lights("off").
 
 /* Initial goals */ 
 
@@ -31,8 +33,13 @@ artifical_light(1).
 +upcoming_event("now") : owner_state("awake") <-
     .print("Enjoy your event!").
 
-@react_to_event_plan_when_asleep
+@react_to_event_plan_when_eventnow
 +upcoming_event("now") : owner_state("asleep") <-
+    .print("Starting wake up routine.");
+    !wakeup_routine.
+
+@react_to_event_plan_when_asleep
++owner_state("asleep") : upcoming_event("now") <-
     .print("Starting wake up routine.");
     !wakeup_routine.
 
@@ -50,7 +57,7 @@ artifical_light(1).
 @handle_refusal_blinds
 +refusal(raise_blinds) : true <-
     .print("Proposal to raise blinds was refused, attempting to turn on lights");
-    !wakeup_lights.
+    !wakeup_routine.
 
 @wakeup_lights
 +proposal(turn_on_lights) : blinds("raised") & lights("off") <-

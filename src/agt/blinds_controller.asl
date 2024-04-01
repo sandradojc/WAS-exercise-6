@@ -24,8 +24,7 @@ blinds("lowered").
 +!start : td("https://was-course.interactions.ics.unisg.ch/wake-up-ontology#Blinds", Url) <-
     .print("Hello world");
     makeArtifact("Blinds", "org.hyperagents.jacamo.artifacts.wot.ThingArtifact", [Url], ArtId);
-    .print("Blinds created");
-    !read_blinds_state.
+    .print("Blinds created").
 
 @read_blinds_state_plan_when_lowered
 +!read_blinds_state : blinds("lowered") <-

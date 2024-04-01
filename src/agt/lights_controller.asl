@@ -24,8 +24,7 @@ lights("off").
 +!start : td("https://was-course.interactions.ics.unisg.ch/wake-up-ontology#Lights", Url) <-
     .print("Hello world");
     makeArtifact("Lights", "org.hyperagents.jacamo.artifacts.wot.ThingArtifact", [Url], ArtId);
-    .print("Lights created");
-    !read_lights_state.
+    .print("Lights created").
 
 @read_lights_state_plan_when_off
 +!read_lights_state : lights("off") <-
